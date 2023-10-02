@@ -5,7 +5,7 @@
 #include "List.h"
 
 List newList(void){
-    List L = malloc(sizeof(List));
+    List L = malloc(sizeof(struct ListObj));
     L->front = NULL;
     L->back = NULL;
     L->cursor = NULL;
@@ -14,11 +14,9 @@ List newList(void){
     return L;
 }
 
-void freeList(List *pL) {
+void freeList(List* pL) {
     if (pL != NULL && *pL != NULL) {
-        while (length(*pL) > 0) {
-            deleteFront(*pL);
-        }
+        clear(*pL);
         free(*pL);
         *pL = NULL;
     }
