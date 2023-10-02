@@ -29,8 +29,14 @@ ListTest.o : ListTest.c List.h
 List.o : List.c List.h
 	gcc $(CFLAGS) -c List.c
 
+Testing/ListClient.o: Testing/ListClient.c List.h
+	gcc $(CFLAGS) -c Testing/ListClient.c -o Testing/ListClient.o
+
+test: Testing/ListClient.o List.o
+	gcc $(CFLAGS) -o test Testing/ListClient.o List.o
+
 clean :
-	rm -f Lex ListTest Lex.o ListTest.o List.o
+	rm -f Lex ListTest Lex.o ListTest.o List.o Testing/ListClient.o test
 
 checkListTest :
 	valgrind --leak-check=full ListTest
@@ -40,4 +46,5 @@ checkLex :
 
 run :
 	./Lex defaultInput.txt defaultOutput.txt
+
 

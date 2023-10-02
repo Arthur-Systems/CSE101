@@ -3,7 +3,6 @@
 //
 
 #include "List.h"
-#include <stdlib.h>
 
 List newList(void){
     List L = malloc(sizeof(List));
@@ -374,7 +373,7 @@ List copyList(List L){
 }
 
 Node newNode(int data) {
-    Node N = malloc(sizeof(NodeObj));
+    Node N = malloc(sizeof(struct NodeObj));
     N->data = data;
     N->next = NULL;
     N->prev = NULL;

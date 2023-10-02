@@ -6,25 +6,27 @@
 #define CSE101_LIST_H
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 
+// Define the NodeObj and ListObj types
+typedef struct NodeObj* Node;
+typedef struct ListObj* List;
 
-typedef struct NodeObj {
+// Define the structure of NodeObj
+struct NodeObj {
     int data;
-    struct NodeObj* next;
-    struct NodeObj* prev;
-} NodeObj;
+    Node next;
+    Node prev;
+};
 
-typedef NodeObj* Node;
-
-typedef struct ListObj {
+// Define the structure of ListObj
+struct ListObj {
     Node front;
     Node back;
     Node cursor;
     int length;
     int index;
-} ListObj;
-
-typedef ListObj* List;
+};
 
 // Constructors-Destructors ---------------------------------------------------
 List newList(void); // Creates and returns a new empty List.
