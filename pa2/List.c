@@ -1,7 +1,7 @@
 /***
 * Arthur Wei
 * hwei20
-* 2023 Fall CSE101 PA1
+* 2023 Fall CSE101 PA2
 * List.c
 * Implements a doubly linked list ADT with operations to manipulate the list.
 ***/

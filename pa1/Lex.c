@@ -1,14 +1,19 @@
-//
-// Created by Haichuan Wei on 9/30/23.
-//
+/***
+* Arthur Wei
+* hwei20
+* 2023 Fall CSE101 PA1
+* Lex.c
+* Reads lines from an input file, sorts them lexicographically using the List ADT, and writes the sorted lines to an output file.
+***/
 #include "List.h"
 #include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
+
 
 #define MAX_LEN 160
 
-int main(int argc, char* argv[]){
+char *strdup(const char *s);
+
+int main(int argc, char *argv[]) {
     FILE *in, *out;
     char line[MAX_LEN];
     int n = 0;
@@ -29,31 +34,36 @@ int main(int argc, char* argv[]){
         fprintf(stderr, "Unable to open file %s for writing\n", argv[2]);
         exit(1);
     }
+
     // Count the number of lines in the input file
     while (fgets(line, MAX_LEN, in) != NULL) {
         n++;
     }
 
-    char** stringArray = malloc(n * sizeof(char*));
+    char **stringArray = malloc(n * sizeof(char *));
+    if (stringArray == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(1);
+    }
     rewind(in);
 
-    for(int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++) {
         fgets(line, MAX_LEN, in);
+        stringArray[i] = strdup(line);  // Duplicate the line and store in the array
+        if (stringArray[i] == NULL) {
+            fprintf(stderr, "Memory allocation failed\n");
+            exit(1);
+        }
     }
 
     List L = newList();
-    for (int i = 1; i <= n; i++) {
+    for (int i = 0; i < n; i++) {
         append(L, i);
     }
+    clear(L);
 
-    for(int i = 0; i < n; i++){
-        fgets(line, MAX_LEN, in);
-        stringArray[i] = strdup(line);  // Duplicate the line and store in the array
-    }
-
-    // Sort the lines lexicographically using the List data structure
-    for (int i = 1; i < n; i++) {
-        char* temp = stringArray[i];
+    for (int i = 0; i < n; i++) {
+        char *temp = stringArray[i];
         moveFront(L);
         while (index(L) >= 0 && strcmp(temp, stringArray[get(L)]) > 0) {
             moveNext(L);
@@ -82,6 +92,4 @@ int main(int argc, char* argv[]){
     fclose(out);
 
     return 0;
-
-
 }

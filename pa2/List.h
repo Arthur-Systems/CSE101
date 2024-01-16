@@ -1,7 +1,7 @@
 /***
 * Arthur Wei
 * hwei20
-* 2023 Fall CSE101 PA1
+* 2023 Fall CSE101 PA2
 * List.h
 * Contains function prototypes and type definitions for the List ADT used by the Lex program.
 ***/

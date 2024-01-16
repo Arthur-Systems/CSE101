@@ -1,7 +1,7 @@
 /***
 * Arthur Wei
 * hwei20
-* 2023 Fall CSE101 PA1
+* 2023 Fall CSE101 PA4
 * List.c
 * Implements a doubly linked list ADT with operations to manipulate the list.
 ***/
@@ -42,7 +42,7 @@ int index(List L) {
     return L->index;
 }
 
-int front(List L) {
+void* front(List L) {
     if (L == NULL) {
         printf("List Error: calling front() on NULL List reference\n");
         exit(1);
@@ -54,7 +54,7 @@ int front(List L) {
     return L->front->data;
 }
 
-int back(List L) {
+void* back(List L) {
     if (L == NULL) {
         printf("List Error: calling back() on NULL List reference\n");
         exit(1);
@@ -66,7 +66,7 @@ int back(List L) {
     return L->back->data;
 }
 
-int get(List L){
+void* get(List L){
     if(L == NULL){
         printf("List Error: calling get() on NULL List reference\n");
         exit(1);
@@ -80,26 +80,6 @@ int get(List L){
         exit(1);
     }
     return L->cursor->data;
-}
-
-bool equals(List A, List B){
-    if(A == NULL || B == NULL){
-        printf("List Error: calling equals() on NULL List reference\n");
-        exit(1);
-    }
-    if(length(A) != length(B)){
-        return false;
-    }
-    Node N = A->front;
-    Node M = B->front;
-    while(N != NULL && M != NULL){
-        if(N->data != M->data){
-            return false;
-        }
-        N = N->next;
-        M = M->next;
-    }
-    return true;
 }
 
 void clear(List L){
@@ -117,7 +97,7 @@ void clear(List L){
     L->index = -1;
 }
 
-void set(List L, int x){
+void set(List L, void* data){
     if(L == NULL){
         printf("List Error: calling set() on NULL List reference\n");
         exit(1);
@@ -130,7 +110,7 @@ void set(List L, int x){
         printf("List Error: calling set() on an undefined cursor\n");
         exit(1);
     }
-    L->cursor->data = x;
+    L->cursor->data = data;
 }
 
 void moveFront(List L){
@@ -182,12 +162,12 @@ void moveNext(List L){
         L->index = -1;
     }
 }
-void prepend(List L, int x){
+void prepend(List L, void* data){
     if(L == NULL){
         printf("List Error: calling prepend() on NULL List reference\n");
         exit(1);
     }
-    Node N = newNode(x);
+    Node N = newNode(data);
     if(length(L) <= 0){
         L->front = N;
         L->back = N;
@@ -202,12 +182,12 @@ void prepend(List L, int x){
     }
 }
 
-void append(List L, int x){
+void append(List L, void* data){
     if(L == NULL){
         printf("List Error: calling append() on NULL List reference\n");
         exit(1);
     }
-    Node N = newNode(x);
+    Node N = newNode(data);
     if(length(L) <= 0){
         L->front = N;
         L->back = N;
@@ -218,7 +198,7 @@ void append(List L, int x){
     }
     L->length++;
 }
-void insertBefore(List L, int x){
+void insertBefore(List L, void* data){
     if(L == NULL){
         printf("List Error: calling insertBefore() on NULL List reference\n");
         exit(1);
@@ -231,7 +211,7 @@ void insertBefore(List L, int x){
         printf("List Error: calling insertBefore() on an undefined cursor\n");
         exit(1);
     }
-    Node N = newNode(x);
+    Node N = newNode(data);
     if(L->cursor == L->front){
         L->front = N;
     }else{
@@ -244,7 +224,7 @@ void insertBefore(List L, int x){
     L->index++;
 }
 
-void insertAfter(List L, int x){
+void insertAfter(List L, void* data){
     if(L == NULL){
         printf("List Error: calling insertAfter() on NULL List reference\n");
         exit(1);
@@ -257,7 +237,7 @@ void insertAfter(List L, int x){
         printf("List Error: calling insertAfter() on an undefined cursor\n");
         exit(1);
     }
-    Node N = newNode(x);
+    Node N = newNode(data);
     if(L->cursor == L->back){
         L->back = N;
     }else{
@@ -350,34 +330,7 @@ void delete(List L){
     }
 }
 
-
-void printList(FILE* out, List L){
-    if(L == NULL){
-        printf("List Error: calling printList() on NULL List reference\n");
-        exit(1);
-    }
-    Node N = L->front;
-    while(N != NULL){
-        fprintf(out, "%d ", N->data);
-        N = N->next;
-    }
-}
-
-List copyList(List L){
-    if(L == NULL){
-        printf("List Error: calling copyList() on NULL List reference\n");
-        exit(1);
-    }
-    List copy = newList();
-    Node N = L->front;
-    while(N != NULL){
-        append(copy, N->data);
-        N = N->next;
-    }
-    return copy;
-}
-
-Node newNode(int data) {
+Node newNode(void* data) {
     Node N = malloc(sizeof(struct NodeObj));
     N->data = data;
     N->next = NULL;
